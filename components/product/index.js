@@ -1,5 +1,5 @@
 import React from "react";
-import { ProductContainer, Title } from "./style";
+import { ProductContainer, Title, LimitedDetails, Add } from "./style";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
@@ -13,7 +13,13 @@ export default function Product(props) {
     return (
       <ProductContainer onClick={goToProductPage}>
         {imageComponent(image, title)}
-        <Title>{title}</Title>
+        <LimitedDetails>
+          <Title>{title}</Title>
+          <div className="price-section">
+            <div className="price">$ {price}</div>
+            <Add>Add</Add>
+          </div>
+        </LimitedDetails>
       </ProductContainer>
     );
   }

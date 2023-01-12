@@ -2,11 +2,23 @@
   --faded-text: rgba(31, 42, 85, 0.6);
 }
 html,
-body {
+body,
+button,
+input {
   padding: 0;
   margin: 0;
   font-family: Montserrat, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
     Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+input,
+button {
+  /* border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 4px; */
+  /* background: none; */
+}
+button {
+  cursor: pointer;
 }
 
 a {

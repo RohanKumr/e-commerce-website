@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Navbar from "../page-assets/Navbar";
 import Category from "../components/category";
 import { WindowContainer } from "../components/commonStyles/styles";

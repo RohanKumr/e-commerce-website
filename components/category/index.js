@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { CategoryWrapper, ProductsWrapper } from "./style";
 import Product from "../product";
 import { useRouter } from "next/router";
