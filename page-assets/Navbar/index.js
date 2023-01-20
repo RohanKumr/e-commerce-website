@@ -5,7 +5,7 @@ import { WindowContainer } from "../../components/commonStyles/styles";
 import { Login, Nav, NavWrapper, CartButton } from "./style";
 import { logoutUser, toggleCart } from "../../redux/slices/userSlice";
 import dynamic from "next/dynamic";
-// import Cart from "";
+
 const Cart = dynamic(
   import("../Cart" /* webpackChunkName: "chunk-error-pop" */),
   {
@@ -14,8 +14,8 @@ const Cart = dynamic(
   }
 );
 
-export default function Navbar() {
-  const { data, isLogged } = useSelector((state) => state.user).userData;
+function Navbar() {
+  const { data, isLogged } = useSelector((state) => state.user.userData);
   const { cart } = useSelector((state) => state.user);
   const router = useRouter();
   const dispatch = useDispatch();
@@ -48,6 +48,7 @@ export default function Navbar() {
       return <div className="cart-total-items">{cart.data.length}</div>;
     return null;
   };
+
   return (
     <>
       <NavWrapper active={isScrolled}>
@@ -59,6 +60,7 @@ export default function Navbar() {
               </h1>
             </div>
             <div className="right-nav">
+              {isLogged && <Login active={isScrolled}>@{data?.username}</Login>}
               <Login onClick={handleUserLogin} active={isScrolled}>
                 {isLogged ? "Logout" : `Login`}
               </Login>
@@ -74,3 +76,5 @@ export default function Navbar() {
     </>
   );
 }
+
+export default React.memo(Navbar);

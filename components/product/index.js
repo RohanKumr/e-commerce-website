@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { addToCart } from "../../redux/slices/userSlice";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 export default function Product(props) {
   const { limited, product } = props;
@@ -18,6 +19,7 @@ export default function Product(props) {
   const handleCart = (e) => {
     e.stopPropagation();
     dispatch(addToCart({ product }));
+    toast("Added to Cart!");
   };
   if (limited) {
     return (

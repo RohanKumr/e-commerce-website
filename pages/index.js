@@ -10,6 +10,10 @@ import {
   getAllProductCategories,
   getSpecificCategoryProducts,
 } from "../services/product";
+import { SimpleSlider } from "../components/simpleSlider";
+import { HompageCardsLoader } from "../components/contentLoaders";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Home(props) {
   const dispatch = useDispatch();
@@ -19,19 +23,34 @@ export default function Home(props) {
       fetchAllCategoryProducts({ providedCategories: props?.categories })
     );
   }, []);
-  if (allProducts.loading && allProducts.data.length === 0) {
-    return <Loader />;
-  }
+  // if (allProducts.loading && allProducts.data.length === 0) {
+  //   return <Loader />;
+  // }
 
   return (
     <div>
       <Navbar />
       <WindowContainer>
-        {allProducts.data.map((products, i) => (
-          <Category key={i} products={products} />
-        ))}
+        <SimpleSlider />
+        {allProducts.loading && allProducts.data.length === 0
+          ? props?.categories.map((category) => (
+              <div key={category}>
+                <h2>{category.charAt(0).toUpperCase() + category.slice(1)}</h2>
+                <div
+                  style={{ display: "flex", marginTop: "40px", gap: "20px" }}
+                >
+                  {[1, 2, 3, 4].map((i) => (
+                    <HompageCardsLoader key={i + 2} />
+                  ))}
+                </div>
+              </div>
+            ))
+          : allProducts.data.map((products, i) => (
+              <Category key={i} products={products} />
+            ))}
       </WindowContainer>
       <Footer />
+      <ToastContainer position="bottom-left" />
     </div>
   );
 }

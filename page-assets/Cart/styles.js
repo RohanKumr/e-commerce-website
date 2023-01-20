@@ -5,6 +5,9 @@ export const CartContainer = styled.div`
   position: fixed;
   top: 0;
   right: ${({ isOpen }) => (isOpen ? 0 : "-350px")};
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   transition: 300ms;
   width: 350px;
   height: 100%;
@@ -122,9 +125,11 @@ export const CloseButton = styled.div`
 export const CheckoutOut = styled.div`
   position: sticky;
   bottom: -20px;
-  left: 0;
+  box-sizing: initial;
+  left: 0px;
   padding: 16px;
-  margin: 0 -20px -36px;
+  width: inherit;
+  margin: 0px -36px -36px;
   background: orange;
   font-weight: 600;
 `;

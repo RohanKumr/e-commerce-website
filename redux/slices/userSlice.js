@@ -1,3 +1,4 @@
+// import { toast } from "react-toastify";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   createUserAsync,
@@ -143,7 +144,6 @@ export const userSlice = createSlice({
         state.userData.isSuccess = false;
       })
       .addCase(addToCart.fulfilled, (state, { payload }) => {
-        console.log(payload);
         const matchingIndex = state.cart.data.findIndex(
           (prod) => prod.id == payload.id
         );

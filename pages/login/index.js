@@ -11,5 +11,5 @@ function index() {
   );
 }
 
-// export default withNavAndFooter(index);
-export default index;
+export default withNavAndFooter(index);
+// export default index;
