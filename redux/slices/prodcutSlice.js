@@ -7,9 +7,10 @@ import {
 
 export const fetchAllCategoryProducts = createAsyncThunk(
   "product/getProducts",
-  async (arg, { rejectWithValue }) => {
+  async ({ providedCategories }, { rejectWithValue }) => {
     try {
-      const categories = await getAllProductCategories();
+      const categories =
+        providedCategories || (await getAllProductCategories());
       const fetchedCategoryProducts = categories
         ?.reverse()
         ?.map((category) =>
@@ -23,9 +24,9 @@ export const fetchAllCategoryProducts = createAsyncThunk(
 );
 export const getSingleProduct = createAsyncThunk(
   "product/getProduct",
-  async ({ productId }, { rejectWithValue }) => {
+  async ({ productId, singleProduct }, { rejectWithValue }) => {
     try {
-      const data = await getProduct(productId);
+      const data = singleProduct || (await getProduct(productId));
       return data;
     } catch (err) {
       rejectWithValue(err);
@@ -34,9 +35,10 @@ export const getSingleProduct = createAsyncThunk(
 );
 export const getSingleCategoryProducts = createAsyncThunk(
   "product/getSingleCategoryProducts",
-  async ({ category }, { rejectWithValue }) => {
+  async ({ category, productsData }, { rejectWithValue }) => {
     try {
-      const products = await getSpecificCategoryProducts({ category });
+      const products =
+        productsData || (await getSpecificCategoryProducts({ category }));
       return products;
     } catch (err) {
       rejectWithValue(err);
@@ -87,6 +89,7 @@ export const productSlice = createSlice({
       })
       .addCase(getSingleProduct.pending, (state, { payload }) => {
         state.currentProduct.loading = true;
+        state.currentProduct.data = initialState.currentProduct;
       })
       .addCase(getSingleProduct.fulfilled, (state, { payload }) => {
         state.currentProduct.loading = false;

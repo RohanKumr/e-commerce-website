@@ -1,11 +1,23 @@
 import Loader from "../../../components/Loader";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { WindowContainer } from "../../../components/commonStyles/styles";
+import {
+  WindowContainer,
+  QuantityButton,
+} from "../../../components/commonStyles/styles";
 import withNavAndFooter from "../../../hooks/withNavAndFooter";
-import { getSingleProduct } from "../../../redux/slices/prodcutSlice";
+import {
+  getSingleCategoryProducts,
+  getSingleProduct,
+} from "../../../redux/slices/prodcutSlice";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import Category from "../../../components/category";
+import {
+  getProduct,
+  getSpecificCategoryProducts,
+} from "../../../services/product";
+import { addToCart } from "../../../redux/slices/userSlice";
 
 export const ProductPageWrapper = styled.div`
   min-height: 100vh;
@@ -33,11 +45,15 @@ export const ProductDisplay = styled.div`
 `;
 
 function ProductPage(props) {
-  const { productId } = props.params;
-  const { currentProduct } = useSelector((state) => state.product);
+  const {
+    params: { productId },
+    singleProduct,
+    allSpecificCategoryProducts,
+  } = props;
+  // const { currentProduct } = useSelector((state) => state.product);
+  // const { singleCategoryProducts } = useSelector((state) => state.product);
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
-
   function quantityHandler(operation) {
     if (operation == "+") {
       if (quantity === 10) return;
@@ -49,25 +65,43 @@ function ProductPage(props) {
     }
   }
 
-  useEffect(() => {
-    dispatch(getSingleProduct({ productId }));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getSingleProduct({ singleProduct, productId }));
+  // }, [productId]);
 
-  if (currentProduct.loading) return <Loader />;
-  const { title, description, image, price, category } = currentProduct.data;
+  // useEffect(() => {
+  //   dispatch(
+  //     getSingleCategoryProducts({
+  //       productsData: allSpecificCategoryProducts,
+  //       category: currentProduct?.data?.category,
+  //     })
+  //   );
+  // }, [currentProduct.data || productId]);
+
+  const handleCart = () => {
+    dispatch(
+      addToCart({
+        product: { ...(singleProduct || currentProduct?.data), quantity },
+      })
+    );
+  };
+  const { title, description, image, price, category } =
+    singleProduct || currentProduct?.data;
   return (
     <WindowContainer>
       <ProductPageWrapper>
         <ProductDisplay>
           <div>
-            <Image
-              priority
-              height={400}
-              width={400}
-              objectfit="cover"
-              alt={title}
-              src={image}
-            />
+            {image && (
+              <Image
+                src={image}
+                alt={title}
+                height={400}
+                width={400}
+                objectfit="cover"
+                priority
+              />
+            )}
           </div>
           <div>
             <div className="category">{category}</div>
@@ -76,23 +110,43 @@ function ProductPage(props) {
             <br />
             <div className="description">{description}</div>
             <br />
-            <div className="price">$ {price * quantity}</div>
+            <div className="price">$ {(price * quantity).toFixed(2)}</div>
             <br />
             <div>Quantity : {quantity}</div>
             <br />
-            <button onClick={() => quantityHandler("-")}> - </button>{" "}
-            <button onClick={() => quantityHandler("+")}> + </button>
+            <QuantityButton onClick={() => quantityHandler("-")}>
+              -
+            </QuantityButton>
+            <QuantityButton onClick={() => quantityHandler("+")}>
+              +
+            </QuantityButton>
+            <QuantityButton onClick={() => handleCart()}>
+              ADD TO CART
+            </QuantityButton>
           </div>
         </ProductDisplay>
-        <div>InsertSimilarProductsHere</div>
+
+        <Category
+          products={allSpecificCategoryProducts
+            .filter((product) => product.id != productId)
+            .slice(0, 4)}
+        />
       </ProductPageWrapper>
     </WindowContainer>
   );
 }
 
-export function getServerSideProps(context) {
+export async function getServerSideProps(context) {
+  const singleProduct = await getProduct(context.params.productId);
+  const allSpecificCategoryProducts = await getSpecificCategoryProducts({
+    category: singleProduct.category,
+  });
   return {
-    props: { params: context.params },
+    props: {
+      params: context.params,
+      singleProduct,
+      allSpecificCategoryProducts,
+    },
   };
 }
 

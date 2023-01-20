@@ -22,6 +22,23 @@ export const Nav = styled.div`
     font-style: italic;
     cursor: pointer;
   }
+  .right-nav {
+    display: flex;
+    gap: 20px;
+  }
+  .cart-total-items {
+    position: absolute;
+    top: -3px;
+    right: -21px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: red;
+    width: 20px;
+    height: 20px;
+    color: white;
+    font-size: 13px;
+  }
 `;
 
 export const Login = styled.button`
@@ -31,4 +48,10 @@ export const Login = styled.button`
   border: none;
   letter-spacing: 1.5;
   cursor: pointer;
+`;
+export const CartButton = styled.h1`
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
 `;

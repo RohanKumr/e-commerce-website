@@ -45,6 +45,38 @@ export const createNewUser = createAsyncThunk(
   }
 );
 
+export const addToCart = createAsyncThunk(
+  "user/addToCart",
+  async ({ product }, { rejectWithValue }) => {
+    try {
+      return product;
+    } catch (err) {
+      rejectWithValue(err);
+    }
+  }
+);
+export const removeFromCart = createAsyncThunk(
+  "user/removeFromCart",
+  async ({ id, action }, { rejectWithValue }) => {
+    try {
+      return { id, action };
+    } catch (err) {
+      rejectWithValue(err);
+    }
+  }
+);
+
+export const toggleCart = createAsyncThunk(
+  "user/toggleCart",
+  async ({ toggleCart }, { rejectWithValue }) => {
+    try {
+      return true;
+    } catch (err) {
+      rejectWithValue(err);
+    }
+  }
+);
+
 const initialState = {
   userData: {
     isLogged: false,
@@ -53,7 +85,10 @@ const initialState = {
     isSuccess: false,
     data: [],
   },
-  cart: [],
+  cart: {
+    isOpen: false,
+    data: [],
+  },
   isCreatedUser: {
     loading: false,
     isSuccess: false,
@@ -106,6 +141,34 @@ export const userSlice = createSlice({
         state.userData.loading = false;
         state.userData.message = payload;
         state.userData.isSuccess = false;
+      })
+      .addCase(addToCart.fulfilled, (state, { payload }) => {
+        console.log(payload);
+        const matchingIndex = state.cart.data.findIndex(
+          (prod) => prod.id == payload.id
+        );
+
+        if (matchingIndex !== -1) {
+          if (state.cart.data[matchingIndex].quantity == 10) return state;
+          state.cart.data[matchingIndex].quantity++;
+        } else state.cart.data.push({ ...payload, quantity: 1 });
+      })
+      .addCase(toggleCart.fulfilled, (state, { payload }) => {
+        state.cart.isOpen = !state.cart.isOpen;
+      })
+      .addCase(removeFromCart.fulfilled, (state, { payload }) => {
+        if (payload.action == "quantity") {
+          const matchingIndex = state.cart.data.findIndex(
+            (prod) => prod.id == payload.id
+          );
+          if (state.cart.data[matchingIndex].quantity <= 1)
+            state.cart.data[matchingIndex].quantity = 1;
+          else state.cart.data[matchingIndex].quantity--;
+        } else {
+          state.cart.data = state.cart.data.filter(
+            (prod) => prod.id != payload.id
+          );
+        }
       });
   },
 });

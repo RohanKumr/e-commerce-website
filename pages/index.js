@@ -6,14 +6,19 @@ import Footer from "../page-assets/Footer";
 import Loader from "../components/Loader";
 import { fetchAllCategoryProducts } from "../redux/slices/prodcutSlice";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  getAllProductCategories,
+  getSpecificCategoryProducts,
+} from "../services/product";
 
-export default function Home() {
+export default function Home(props) {
   const dispatch = useDispatch();
   const { allProducts } = useSelector((state) => state.product);
   useEffect(() => {
-    dispatch(fetchAllCategoryProducts());
+    dispatch(
+      fetchAllCategoryProducts({ providedCategories: props?.categories })
+    );
   }, []);
-
   if (allProducts.loading && allProducts.data.length === 0) {
     return <Loader />;
   }
@@ -29,4 +34,18 @@ export default function Home() {
       <Footer />
     </div>
   );
+}
+
+export async function getServerSideProps() {
+  // const categories = await getAllProductCategories();
+  return {
+    props: {
+      categories: [
+        "electronics",
+        "jewelery",
+        "men's clothing",
+        "women's clothing",
+      ],
+    },
+  };
 }
