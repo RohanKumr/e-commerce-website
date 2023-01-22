@@ -12,8 +12,6 @@ import {
 } from "../services/product";
 import { SimpleSlider } from "../components/simpleSlider";
 import { HompageCardsLoader } from "../components/contentLoaders";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 export default function Home(props) {
   const dispatch = useDispatch();
@@ -50,7 +48,6 @@ export default function Home(props) {
             ))}
       </WindowContainer>
       <Footer />
-      <ToastContainer position="bottom-left" />
     </div>
   );
 }
