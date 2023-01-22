@@ -30,7 +30,6 @@ export default function Cart(props) {
     dispatch(removeFromCart({ id }));
     toast("Removed from Cart!");
     setTimeout(() => {
-      console.log("TOGGLE CART INITIATED");
       console.log(cart.data);
       cart.data.length == 0 && dispatch(toggleCart({}));
     }, 5000);

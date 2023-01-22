@@ -83,7 +83,8 @@ export default function Footer() {
                 alt="location"
               />
               <p>
-                21, DLF Tower 10th Rd, DLF Cyber City, DLF Phase 2, Sector 24,
+                {/* 21, DLF Tower 10th Rd,  */}
+                DLF Cyber City {/* DLF Phase 2, Sector 24, */}
                 Gurugram, Haryana 122022
               </p>
             </div>

@@ -17,6 +17,8 @@ export const MainFooter = styled.div`
 
 export const CompanyInfo = styled.div`
   font-size: 18px;
+  > div {
+  }
 `;
 
 export const UsefulLinks = styled.div`
@@ -26,7 +28,7 @@ export const UsefulLinks = styled.div`
     grid-template-columns: repeat(2, 1fr);
     /* gap: 100px; */
     p {
-      font-size: 18px;
+      font-size: 14px;
       cursor: pointer;
       :hover {
         text-decoration: underline;
@@ -46,9 +48,11 @@ export const ContactUs = styled.div`
     margin: 13px 0px;
   }
   p {
-    padding-top: 4px;
+    padding-top: 3px;
     margin: 0;
-    font-size: 16px;
+    color: #eaeaea91;
+
+    font-size: 14px;
   }
 `;
 
