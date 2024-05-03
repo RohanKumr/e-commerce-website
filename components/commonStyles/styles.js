@@ -4,6 +4,7 @@ export const WindowContainer = styled.div`
   margin: auto;
   max-width: 1400px;
   width: 100%;
+  scroll-behavior:smooth;
 `;
 
 export const QuantityButton = styled.button`

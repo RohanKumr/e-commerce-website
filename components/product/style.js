@@ -12,11 +12,19 @@ export const ProductContainer = styled.div`
     width: 100%;
     display: flex;
     justify-content: center;
+    img {
+      object-fit:cover;
+    }
+    
   }
-  transition: 300ms;
+  transition:300ms ease-in-out;
   :hover {
-    transform: scale(1.05);
+    transform:scale(1.05);
+    img {
+      object-fit:scale-down;
+    }
   }
+
 `;
 export const Title = styled.div`
   color: rgba(31, 42, 85, 0.6);

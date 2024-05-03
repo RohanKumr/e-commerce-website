@@ -18,18 +18,18 @@ export default function Product(props) {
 
   const handleCart = (e) => {
     e.stopPropagation();
+    toast.success("Added to Cart!");
     dispatch(addToCart({ product }));
-    toast("Added to Cart!");
   };
-  if (limited) {
+  if(limited) {
     return (
-      <ProductContainer onClick={goToProductPage}>
-        {imageComponent(image, title)}
+      <ProductContainer onClick={ goToProductPage }>
+        { imageComponent(image, title) }
         <LimitedDetails>
-          <Title>{title}</Title>
+          <Title>{ title }</Title>
           <div className="price-section">
-            <div className="price">$ {price.toFixed(2)}</div>
-            <Add onClick={handleCart}>Add</Add>
+            <div className="price">$ { price.toFixed(2) }</div>
+            <Add onClick={ handleCart }>Add</Add>
           </div>
         </LimitedDetails>
       </ProductContainer>
@@ -38,11 +38,11 @@ export default function Product(props) {
 
   return (
     <ProductContainer>
-      {imageComponent(image, title)}
-      <Title>{title}</Title>
-      <div>Category: {category}</div>
-      <div>description: {description}</div>
-      <div>price: {price}</div>
+      { imageComponent(image, title) }
+      <Title>{ title }</Title>
+      <div>Category: { category }</div>
+      <div>description: { description }</div>
+      <div>price: { price }</div>
     </ProductContainer>
   );
 }
@@ -51,12 +51,12 @@ const imageComponent = (image, title) => (
   <div className="img-wrapper">
     <Image
       priority
-      width={200}
-      height={200}
-      alt={title}
+      width={ 200 }
+      height={ 200 }
+      alt={ title }
       // Layout="fill"
       // ObjectFit="contain"
-      src={image}
+      src={ image }
     />
   </div>
 );

@@ -14,11 +14,11 @@ export const loginUser = createAsyncThunk(
         loginUserAsync({ username, password, id }),
         getAllUsersAsync(),
       ]);
-      if (token) {
+      if(token) {
         const user = await users.filter((user) => user.username === username);
         return { ...user[0], token };
       }
-    } catch (err) {
+    } catch(err) {
       rejectWithValue(err);
     }
   }
@@ -28,7 +28,7 @@ export const logoutUser = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       return {};
-    } catch (err) {
+    } catch(err) {
       rejectWithValue(err);
     }
   }
@@ -39,8 +39,8 @@ export const createNewUser = createAsyncThunk(
   async (arg, { rejectWithValue }) => {
     try {
       const { id } = await createUserAsync(arg);
-      if (id) return { ...arg, id };
-    } catch (err) {
+      if(id) return { ...arg, id };
+    } catch(err) {
       rejectWithValue(err);
     }
   }
@@ -51,7 +51,7 @@ export const addToCart = createAsyncThunk(
   async ({ product }, { rejectWithValue }) => {
     try {
       return product;
-    } catch (err) {
+    } catch(err) {
       rejectWithValue(err);
     }
   }
@@ -61,7 +61,7 @@ export const removeFromCart = createAsyncThunk(
   async ({ id, action }, { rejectWithValue }) => {
     try {
       return { id, action };
-    } catch (err) {
+    } catch(err) {
       rejectWithValue(err);
     }
   }
@@ -72,7 +72,7 @@ export const toggleCart = createAsyncThunk(
   async ({ toggleCart }, { rejectWithValue }) => {
     try {
       return true;
-    } catch (err) {
+    } catch(err) {
       rejectWithValue(err);
     }
   }
@@ -148,8 +148,8 @@ export const userSlice = createSlice({
           (prod) => prod.id == payload.id
         );
 
-        if (matchingIndex !== -1) {
-          if (state.cart.data[matchingIndex].quantity == 10) return state;
+        if(matchingIndex !== -1) {
+          if(state.cart.data[matchingIndex].quantity == 10) return state;
           state.cart.data[matchingIndex].quantity++;
         } else state.cart.data.push({ ...payload, quantity: 1 });
       })
@@ -157,11 +157,11 @@ export const userSlice = createSlice({
         state.cart.isOpen = !state.cart.isOpen;
       })
       .addCase(removeFromCart.fulfilled, (state, { payload }) => {
-        if (payload.action == "quantity") {
+        if(payload.action == "quantity") {
           const matchingIndex = state.cart.data.findIndex(
             (prod) => prod.id == payload.id
           );
-          if (state.cart.data[matchingIndex].quantity <= 1)
+          if(state.cart.data[matchingIndex].quantity <= 1)
             state.cart.data[matchingIndex].quantity = 1;
           else state.cart.data[matchingIndex].quantity--;
         } else {

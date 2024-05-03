@@ -22,13 +22,13 @@ export default function Cart(props) {
   console.log({ cart });
   const handleCart = () => dispatch(toggleCart({}));
   const numberOfItemsInCart = () => {
-    if (cart.data.length)
-      return <div className="cart-total-items">{cart.data.length}</div>;
+    if(cart.data.length)
+      return <div className="cart-total-items">{ cart.data.length }</div>;
     return null;
   };
   const handleRemoveItemFromCart = (id) => {
     dispatch(removeFromCart({ id }));
-    toast("Removed from Cart!");
+    toast.error("Removed from Cart!");
     setTimeout(() => {
       console.log(cart.data);
       cart.data.length == 0 && dispatch(toggleCart({}));
@@ -38,31 +38,31 @@ export default function Cart(props) {
   // useEffect(() => {
   //   cart.data.length == 0 && dispatch(toggleCart({}));
   // }, [cart]);
-  if (cart.isOpen && cart.data.length == 0)
+  if(cart.isOpen && cart.data.length == 0)
     setTimeout(() => dispatch(toggleCart({})), 1000);
 
   return (
-    <CartContainer isOpen={cart.isOpen}>
-      <div style={{ display: "flex", flexDirection: "column" }}>
+    <CartContainer isOpen={ cart.isOpen }>
+      <div style={ { display: "flex", flexDirection: "column" } }>
         <Header>
-          <h1> 🛒 CART {numberOfItemsInCart()}</h1>
-          <CloseButton onClick={() => handleCart()}>X</CloseButton>
+          <h1> 🛒 CART { numberOfItemsInCart() }</h1>
+          <CloseButton onClick={ () => handleCart() }>X</CloseButton>
         </Header>
-        {cart.data.length == 0 && <h3>Your Cart is empty.</h3>}
-        {cart.data.map((product) => (
-          <CartItem key={product.title}>
+        { cart.data.length == 0 && <h3>Your Cart is empty.</h3> }
+        { cart.data.map((product) => (
+          <CartItem key={ product.title }>
             <div
-              style={{
+              style={ {
                 display: "flex",
                 gap: "20px",
                 alignItems: "flex-start",
                 flexDirection: "row-reverse",
-              }}
+              } }
             >
               <Image
                 height="100"
                 width="100"
-                alt={product.title}
+                alt={ product.title }
                 // loading="lazy"
                 style={
                   {
@@ -71,16 +71,16 @@ export default function Cart(props) {
                   }
                 }
                 // fill={true}
-                src={product.image}
+                src={ product.image }
               />
-              <div className="title">{product.title}</div>
+              <div className="title">{ product.title }</div>
             </div>
 
             <div className="quantity">
               <div>Qty:</div>
               <span
                 className="quantity-operations"
-                onClick={() =>
+                onClick={ () =>
                   dispatch(
                     removeFromCart({ id: product.id, action: "quantity" })
                   )
@@ -88,29 +88,29 @@ export default function Cart(props) {
               >
                 -
               </span>
-              <div className="qty">{product.quantity}</div>
+              <div className="qty">{ product.quantity }</div>
               <span
                 className="quantity-operations"
-                onClick={() => dispatch(addToCart({ product }))}
+                onClick={ () => dispatch(addToCart({ product })) }
               >
                 +
               </span>
             </div>
-            <div className="price"> Price : ${product.price}</div>
+            <div className="price"> Price : ${ product.price }</div>
             <div
               className="remove-item"
-              onClick={() => handleRemoveItemFromCart(product.id)}
+              onClick={ () => handleRemoveItemFromCart(product.id) }
             >
               Delete
             </div>
           </CartItem>
-        ))}
+        )) }
       </div>
       <CheckoutOut>
         Total : $
-        {cart.data
+        { cart.data
           .reduce((acc, prod) => acc + prod.price * prod.quantity, 0)
-          .toFixed(2)}
+          .toFixed(2) }
       </CheckoutOut>
     </CartContainer>
   );

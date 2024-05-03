@@ -19,7 +19,7 @@ export function SimpleSlider() {
 
   return (
     <SliderWrapper>
-      <Slider {...settings}>
+      <Slider { ...settings }>
         <div>
           <Image
             src="https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
@@ -75,6 +75,6 @@ export function SimpleSlider() {
           ></Image>
         </div>
       </Slider>
-    </SliderWrapper>
+    </SliderWrapper >
   );
 }
