@@ -3,11 +3,14 @@ import { ProductContainer, Title, LimitedDetails, Add } from "./style";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { addToCart } from "../../redux/slices/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 export default function Product(props) {
   const { limited, product } = props;
+
+  const { isLogged } = useSelector((state) => state.user.userData);
+
   const { title, image, category, description, price, id } = product;
   const router = useRouter();
   const dispatch = useDispatch();
@@ -18,6 +21,10 @@ export default function Product(props) {
 
   const handleCart = (e) => {
     e.stopPropagation();
+    if(!isLogged) {
+      router.push('/login')
+      return
+    }
     toast.success("Added to Cart!");
     dispatch(addToCart({ product }));
   };

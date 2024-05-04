@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createNewUser, loginUser } from "../../redux/slices/userSlice";
 
 import { LoginContainer, LoginWrapper, SignUpContainer } from "./style";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const { userData } = useSelector((state) => state.user);
@@ -18,8 +19,8 @@ export default function Login() {
   });
 
   const [loginData, setLoginData] = useState({
-    userName: "johnd",
-    password: "m38rmF$",
+    userName: "",
+    password: "",
   });
 
   const signUp = () => {
@@ -38,6 +39,7 @@ export default function Login() {
 
   const login = (e) => {
     e.preventDefault();
+    toast.success("Logged in successfully!")
     dispatch(
       loginUser({
         username: loginData.userName,
@@ -54,31 +56,31 @@ export default function Login() {
   };
 
   useEffect(() => {
-    if (userData.isLogged) router.push("/");
+    if(userData.isLogged) router.push("/");
   }, [userData.isLogged]);
 
   return (
     <LoginWrapper>
-      {page ? (
+      { page ? (
         <LoginContainer>
           <h1>Login</h1>
           <input
             name="userName"
             type="text"
             placeholder="Username"
-            onChange={changeLoginData}
-            value={loginData.userName}
+            onChange={ changeLoginData }
+            value={ loginData.userName }
           />
           <input
             name="password"
             type="password"
             placeholder="Password"
-            onChange={changeLoginData}
-            value={loginData.password}
+            onChange={ changeLoginData }
+            value={ loginData.password }
             autoComplete="on"
           />
-          <button onClick={login}> Login</button>
-          <div className="switch-states" onClick={() => setPage(!page)}>
+          <button onClick={ login }> Login</button>
+          <div className="switch-states" onClick={ () => setPage(!page) }>
             Create a new Account.
           </div>
         </LoginContainer>
@@ -87,39 +89,39 @@ export default function Login() {
           <h1>Sign Up</h1>
           <input
             name="firstName"
-            value={inputData.firstName}
+            value={ inputData.firstName }
             type="text"
             placeholder="First Name"
-            onChange={changeInputData}
+            onChange={ changeInputData }
           />
           <input
             name="lastName"
             type="text"
             placeholder="Last Name"
-            value={inputData.lastName}
-            onChange={changeInputData}
+            value={ inputData.lastName }
+            onChange={ changeInputData }
           />
           <input
             name="userName"
             type="text"
-            onChange={changeInputData}
+            onChange={ changeInputData }
             placeholder="Username"
-            value={inputData.userName}
+            value={ inputData.userName }
           />
           <input
             name="password"
             type="password"
-            onChange={changeInputData}
+            onChange={ changeInputData }
             placeholder="Password"
-            value={inputData.password}
+            value={ inputData.password }
             autoComplete="on"
           />
-          <button onClick={signUp}> Create New Account</button>
-          <div className="switch-states" onClick={() => setPage(!page)}>
+          <button onClick={ signUp }> Create New Account</button>
+          <div className="switch-states" onClick={ () => setPage(!page) }>
             Have an Account? Login here.
           </div>
         </SignUpContainer>
-      )}
+      ) }
     </LoginWrapper>
   );
 }

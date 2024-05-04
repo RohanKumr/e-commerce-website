@@ -10,8 +10,10 @@ import {
   Icon,
 } from "./style";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 export default function Footer() {
+  const router = useRouter()
   return (
     <FooterWrapper>
       <WindowContainer>
@@ -60,16 +62,17 @@ export default function Footer() {
             <h2>Useful Links</h2>
             <div className="grid">
               <div>
-                <p>Home</p>
-                <p>Men's Fashion</p>
-                <p>Women's Fashion</p>
-                <p>Electronics</p>
+                <p onClick={ () => router.push('/') } > Home</p>
+                <p onClick={ () => router.push("/men's clothing") } > Men's Fashion</p>
+                <p onClick={ () => router.push("/women's clothing") } > Women's Fashion</p>
+                <p onClick={ () => router.push("/electronics") } > Electronics</p>
               </div>
               <div>
-                <p>Jewelery</p>
-                <p>Cart</p>
-                <p>Whislist</p>
-                <p>Terms</p>
+                <p onClick={ () => router.push("/jewelery") } > Jewelery</p>
+                <p onClick={ () => router.push("/cart") } > Cart</p>
+                <p onClick={ () => router.push("/wishlist") } > Wishlist</p>
+                <p onClick={ () => router.push("/terms") } > Terms</p>
+
               </div>
             </div>
           </UsefulLinks>
@@ -83,8 +86,8 @@ export default function Footer() {
                 alt="location"
               />
               <p>
-                {/* 21, DLF Tower 10th Rd,  */}
-                DLF Cyber City {/* DLF Phase 2, Sector 24, */}
+                {/* 21, DLF Tower 10th Rd,  */ }
+                DLF Cyber City {/* DLF Phase 2, Sector 24, */ }
                 Gurugram, Haryana 122022
               </p>
             </div>
@@ -105,7 +108,7 @@ export default function Footer() {
                 src="/images/email.png"
                 alt="phone"
               />
-              <p>rkrohanrk065@gmail.com</p>
+              <p>arrivalsnewofficial@gmail.com</p>
             </div>
           </ContactUs>
         </MainFooter>

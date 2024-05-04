@@ -13,16 +13,14 @@ export const ProductContainer = styled.div`
     display: flex;
     justify-content: center;
     img {
-      object-fit:cover;
+      object-fit:scale-down;
     }
     
   }
   transition:300ms ease-in-out;
   :hover {
     transform:scale(1.05);
-    img {
-      object-fit:scale-down;
-    }
+
   }
 
 `;

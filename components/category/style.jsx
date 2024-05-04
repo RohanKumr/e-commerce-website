@@ -14,8 +14,13 @@ export const CategoryWrapper = styled.div`
   }
 `;
 export const ProductsWrapper = styled.div`
-  display: flex;
+  /* display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  justify-content: space-around;
+  justify-content: space-around; */
+
+  display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    justify-content: flex-start;
 `;

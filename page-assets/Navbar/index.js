@@ -5,6 +5,7 @@ import { WindowContainer } from "../../components/commonStyles/styles";
 import { Login, Nav, NavWrapper, CartButton } from "./style";
 import { logoutUser, toggleCart } from "../../redux/slices/userSlice";
 import dynamic from "next/dynamic";
+import { toast } from "react-toastify";
 
 const Cart = dynamic(
   import("../Cart" /* webpackChunkName: "chunk-error-pop" */),
@@ -32,7 +33,7 @@ function Navbar() {
     router.push("/login");
   };
   const logout = () => {
-    console.log("logout");
+    toast.success("Logged out successfully!")
     dispatch(logoutUser());
   };
 
@@ -44,35 +45,35 @@ function Navbar() {
     dispatch(toggleCart({}));
   };
   const numberOfItemsInCart = () => {
-    if (cart.data.length)
-      return <div className="cart-total-items">{cart.data.length}</div>;
+    if(cart.data.length)
+      return <div className="cart-total-items">{ cart.data.length }</div>;
     return null;
   };
 
   return (
     <>
-      <NavWrapper active={isScrolled}>
+      <NavWrapper active={ isScrolled }>
         <WindowContainer>
           <Nav>
             <div className="left-nav">
-              <h1 id="company-name" onClick={() => router.push("/")}>
+              <h1 id="company-name" onClick={ () => router.push("/") }>
                 ARRIVALS
               </h1>
             </div>
             <div className="right-nav">
-              {isLogged && <Login active={isScrolled}>@{data?.username}</Login>}
-              <Login onClick={handleUserLogin} active={isScrolled}>
-                {isLogged ? "Logout" : `Login`}
+              { isLogged && <Login active={ isScrolled }>@{ data?.username }</Login> }
+              <Login onClick={ handleUserLogin } active={ isScrolled }>
+                { isLogged ? "Logout" : `Login` }
               </Login>
-              <CartButton onClick={() => handleCart()}>
-                {" "}
-                🛒 CART {numberOfItemsInCart()}
-              </CartButton>
+              { isLogged && <CartButton onClick={ () => handleCart() }>
+                { " " }
+                🛒 CART { numberOfItemsInCart() }
+              </CartButton> }
             </div>
           </Nav>
         </WindowContainer>
       </NavWrapper>
-      <Cart dispatch={dispatch} cart={cart} />
+      <Cart dispatch={ dispatch } cart={ cart } />
     </>
   );
 }

@@ -11,12 +11,12 @@ export const loginUser = createAsyncThunk(
   async ({ username, password, id }, { rejectWithValue }) => {
     try {
       const [{ token }, users] = await Promise.all([
-        loginUserAsync({ username, password, id }),
+        loginUserAsync({ username: 'johnd', password: "m38rmF$", id }),
         getAllUsersAsync(),
       ]);
       if(token) {
         const user = await users.filter((user) => user.username === username);
-        return { ...user[0], token };
+        return { ...{ username, password, ...user[0] }, token };
       }
     } catch(err) {
       rejectWithValue(err);
@@ -38,8 +38,11 @@ export const createNewUser = createAsyncThunk(
   "user/isCreatedUser",
   async (arg, { rejectWithValue }) => {
     try {
-      const { id } = await createUserAsync(arg);
-      if(id) return { ...arg, id };
+      const data = await setTimeout(() => {
+        return arg;
+      }, 1000);;
+      const { name, username, password } = data;
+      return { name, username, password };
     } catch(err) {
       rejectWithValue(err);
     }

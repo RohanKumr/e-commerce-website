@@ -12,8 +12,7 @@ import {
 } from "../services/product";
 import { SimpleSlider } from "../components/simpleSlider";
 import { HompageCardsLoader } from "../components/contentLoaders";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 
 export default function Home(props) {
   const dispatch = useDispatch();
@@ -29,11 +28,7 @@ export default function Home(props) {
 
   return (
     <div>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={ 1000 }
-        theme="dark"
-      />
+
       <Navbar />
       <WindowContainer>
         <SimpleSlider />

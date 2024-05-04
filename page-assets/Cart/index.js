@@ -29,10 +29,7 @@ export default function Cart(props) {
   const handleRemoveItemFromCart = (id) => {
     dispatch(removeFromCart({ id }));
     toast.error("Removed from Cart!");
-    setTimeout(() => {
-      console.log(cart.data);
-      cart.data.length == 0 && dispatch(toggleCart({}));
-    }, 5000);
+    cart.data.length == 0 && dispatch(toggleCart({}));
   };
 
   // useEffect(() => {
